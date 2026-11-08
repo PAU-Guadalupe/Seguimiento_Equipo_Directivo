@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Dirección EVG</title>
   <meta name="description" content="Seguimiento del Equipo Directivo · Actas e INFO_CD · Escuela Virgen de Guadalupe">
-  <meta name="theme-color" content="#f7fafd">
+  <meta name="theme-color" content="#2c6c92">
   <meta name="mobile-web-app-capable" content="yes">
 
   <!-- iOS -->
@@ -75,6 +75,23 @@
         <li>Elige <b>Añadir a pantalla de inicio</b> y confirma.</li>
       </ol>
     </div>
+    <div class="ayuda" id="ayudaChrome">
+      <b>Instalar en el ordenador (Mac o Windows) con Chrome</b>
+      <ol>
+        <li>Pulsa <b>Instalar en este dispositivo</b> (si aparece arriba) o el icono
+          <svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a5c8f" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 8v6M9 11l3 3 3-3M8 21h8"/></svg>
+          de la barra de direcciones.</li>
+        <li>O bien: menú <b>⋮</b> → <b>Transmitir, guardar y compartir</b> → <b>Instalar página como aplicación…</b></li>
+        <li>Confirma con <b>Instalar</b>. En Mac aparecerá en el Launchpad y en <b>Aplicaciones de Chrome</b>; arrástrala al Dock si quieres tenerla siempre a mano.</li>
+      </ol>
+    </div>
+    <div class="ayuda" id="ayudaSafariMac">
+      <b>Instalar en el Mac</b>
+      <ol>
+        <li>Recomendado: abre esta página en <b>Google Chrome</b> y pulsa <b>Instalar</b>.</li>
+        <li>Con Safari (macOS Sonoma o posterior): menú <b>Archivo</b> → <b>Añadir al Dock…</b></li>
+      </ol>
+    </div>
     <div class="ayuda" id="ayudaAndroid">
       <b>Instalar en Android</b>
       <ol>
@@ -96,17 +113,30 @@
     const ua = navigator.userAgent;
     const esIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const esAndroid = /Android/i.test(ua);
+    const esChromium = /Chrome\/|Chromium\/|Edg\//.test(ua);
+    const esMac = /Macintosh|Mac OS X/.test(ua) && !esIOS;
 
-    $('abrir').href = configurada ? APP_URL : '#';
+    // Vista inicial (accesos directos del Dock / pulsación larga): ?vista=buscador
+    const vista = new URLSearchParams(location.search).get('vista');
+    const destino = configurada && vista ? APP_URL + (APP_URL.includes('?') ? '&' : '?') + 'vista=' + encodeURIComponent(vista) : APP_URL;
+
+    $('abrir').href = configurada ? destino : '#';
     if (!configurada) $('nota').textContent = 'Falta configurar la URL de la aplicación en index.html';
 
     if (standalone) {
       // Abierta desde el icono de la pantalla de inicio → entrar directamente
-      if (configurada) setTimeout(() => location.replace(APP_URL), 300);
+      // En el ordenador: la primera vez, ventana de tamaño cómodo
+      if (!esIOS && !esAndroid && window.outerWidth < 1000) {
+        try { window.resizeTo(Math.min(1240, screen.availWidth), Math.min(900, screen.availHeight)); } catch (e) {}
+      }
+      if (configurada) setTimeout(() => location.replace(destino), 300);
     } else {
       // Abierta en el navegador → mostrar cómo instalarla
       if (esIOS) $('ayudaIOS').style.display = 'block';
       else if (esAndroid) $('ayudaAndroid').style.display = 'block';
+      else if (esChromium) $('ayudaChrome').style.display = 'block';
+      else if (esMac) $('ayudaSafariMac').style.display = 'block';
+      else $('ayudaChrome').style.display = 'block';
     }
 
     // Android/Chrome: botón de instalación nativo

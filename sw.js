@@ -1,6 +1,6 @@
 // Service worker del lanzador Dirección EVG: permite instalarlo como app (Android, y Chrome en Mac/Windows)
 // y que el lanzador abra aunque no haya conexión. No intercepta nada de Google.
-const CACHE = 'direccion-evg-v5';
+const CACHE = 'direccion-evg-v6';
 const ARCHIVOS = [
   './', './index.html', './manifest.json', './logo.png', './apple-touch-icon.png',
   './icon-192.png', './icon-512.png', './maskable-192.png', './maskable-512.png',

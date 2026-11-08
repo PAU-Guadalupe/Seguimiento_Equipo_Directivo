@@ -1,0 +1,37 @@
+{
+  "id": "./",
+  "name": "Dirección EVG · Seguimiento Equipo Directivo",
+  "short_name": "Dirección EVG",
+  "description": "Actas e INFO_CD de las reuniones del Equipo Directivo · Escuela Virgen de Guadalupe",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7fafd",
+  "theme_color": "#2c6c92",
+  "lang": "es-ES",
+  "dir": "ltr",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Reuniones",
+      "short_name": "Reuniones",
+      "description": "Actas e INFO_CD por reunión",
+      "url": "./?source=pwa&vista=reuniones",
+      "icons": [{ "src": "atajo-reuniones.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "Buscador",
+      "short_name": "Buscador",
+      "description": "Buscar palabras clave dentro de los documentos",
+      "url": "./?source=pwa&vista=buscador",
+      "icons": [{ "src": "atajo-buscador.png", "sizes": "96x96", "type": "image/png" }]
+    }
+  ]
+}
